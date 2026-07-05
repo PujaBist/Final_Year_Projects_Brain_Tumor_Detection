@@ -1,0 +1,56 @@
+# ================================================
+# Brain Tumor MRI Classification Project
+# Requirements — Laptop CPU (VS Code)
+# Author: Puja
+# Python: 3.14.x
+# ================================================
+
+# ── Core scientific computing ─────────────────
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+
+# ── Visualization ─────────────────────────────
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# ── Computer Vision ───────────────────────────
+opencv-python>=4.8.0
+Pillow>=10.0.0
+imageio>=2.31.0
+
+# ── Duplicate Detection ───────────────────────
+imagehash>=4.3.1
+
+# ── Deep Learning (CPU only for laptop) ───────
+torch>=2.12.1
+torchvision>=0.20.0
+
+# ── Machine Learning ──────────────────────────
+scikit-learn>=1.3.0
+
+# ── Image Augmentation ────────────────────────
+albumentations>=1.3.1
+
+# ── Experiment Tracking ───────────────────────
+wandb>=0.16.0
+
+# ── Progress Bar ──────────────────────────────
+tqdm>=4.66.0
+
+# ── Configuration ─────────────────────────────
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+
+# ── Notebook support ──────────────────────────
+notebook>=7.0.0
+ipykernel>=6.26.0
+ipywidgets>=8.1.0
+
+# ── Utilities ─────────────────────────────────
+pathlib2>=2.3.7
+colorama>=0.4.6
+
+# ── Statistical Tests (Phase 12) ──────────────
+pingouin>=0.5.4
+statsmodels>=0.14.0
