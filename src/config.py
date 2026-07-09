@@ -32,10 +32,7 @@ SEED = 42
 # ─────────────────────────────────────────────────────────────
 from pathlib import Path
 
-BASE_DIR = Path("/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection")
 
-TRAIN_DATA_DIR = BASE_DIR / "Datasets" / "Training"
-TEST_DATA_DIR = BASE_DIR / "Datasets" / "Testing"
 
 
 # Four tumor classes — exact folder names in your dataset
@@ -60,10 +57,10 @@ TEST_RATIO  = 0.15             # 15% → internal test
 # 4. DATASET PATHS
 # ─────────────────────────────────────────────────────────────
 # Laptop paths (VS Code)
-DATA_DIR              = ROOT / 'data'
-TRAIN_DATA_DIR        = DATA_DIR / 'masoudnickparvar'
-EXTERNAL_TEST_DIR     = DATA_DIR / 'brisc2025'
+BASE_DIR = Path("/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection")
 
+TRAIN_DATA_DIR = BASE_DIR / "Datasets" / "Training"
+TEST_DATA_DIR = BASE_DIR / "Datasets" / "Testing"
 # Colab paths (override in notebook if needed)
 # TRAIN_DATA_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/masoudnickparvar')
 # EXTERNAL_TEST_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/brisc2025')
