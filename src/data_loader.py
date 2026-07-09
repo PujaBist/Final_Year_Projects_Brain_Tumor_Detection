@@ -60,3 +60,37 @@ def get_transforms():
 # Pillow (PIL) is the library used to open and manipulate image files.
 # ImageFolder already uses PIL internally, so you don't need to import Image in data_loader.py.
 # transforms.ToTensor() converts the PIL image into a PyTorch tensor, which is the format your deep learning models require
+
+
+
+
+# ============================================================
+# Load Datasets
+# ============================================================
+
+def load_datasets():
+    """
+    Load training and testing datasets.
+
+    Returns:
+        tuple:
+            train_dataset (ImageFolder)
+            test_dataset (ImageFolder)
+    """
+
+    # Get image transforms
+    train_transform, test_transform = get_transforms()
+
+    # Load training dataset
+    train_dataset = datasets.ImageFolder(
+        root=TRAIN_DATA_DIR,
+        transform=train_transform
+    )
+
+    # Load testing dataset
+    test_dataset = datasets.ImageFolder(
+        root=TEST_DATA_DIR,
+        transform=test_transform
+    )
+
+    return train_dataset, test_dataset
