@@ -30,9 +30,16 @@ SEED = 42
 # ─────────────────────────────────────────────────────────────
 # 3. DATASET SETTINGS
 # ─────────────────────────────────────────────────────────────
+from pathlib import Path
+
+BASE_DIR = Path("/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection")
+
+TRAIN_DATA_DIR = BASE_DIR / "Datasets" / "Training"
+TEST_DATA_DIR = BASE_DIR / "Datasets" / "Testing"
+
 
 # Four tumor classes — exact folder names in your dataset
-CLASSES        = ['glioma', 'meningioma', 'no_tumor', 'pituitary']
+CLASSES        = ['glioma', 'meningioma', 'notumor', 'pituitary']
 NUM_CLASSES    = len(CLASSES)                          # 4
 
 # Class index mapping
