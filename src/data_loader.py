@@ -112,3 +112,41 @@ def show_dataset_info(train_dataset, test_dataset):
 
     print(f"\nClass Mapping :")
     print(train_dataset.class_to_idx)
+
+
+
+    # ============================================================
+# Create DataLoaders
+# ============================================================
+
+def create_dataloaders(train_dataset, test_dataset):
+    """
+    Create PyTorch DataLoaders for training and testing datasets.
+
+    Args:
+        train_dataset: Training dataset.
+        test_dataset: Testing dataset.
+
+    Returns:
+        tuple:
+            train_loader
+            test_loader
+    """
+
+    train_loader = DataLoader(
+        dataset=train_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=NUM_WORKERS,
+        pin_memory=PIN_MEMORY,
+    )
+
+    test_loader = DataLoader(
+        dataset=test_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        num_workers=NUM_WORKERS,
+        pin_memory=PIN_MEMORY,
+    )
+
+    return train_loader, test_loader
