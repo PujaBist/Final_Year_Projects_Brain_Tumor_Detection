@@ -44,7 +44,7 @@ CLASS_TO_IDX   = {cls: idx for idx, cls in enumerate(CLASSES)}
 IDX_TO_CLASS   = {idx: cls for cls, idx in CLASS_TO_IDX.items()}
 
 # Dataset sizes (for reference)
-TRAIN_DATASET_SIZE    = 7023   # Masoudnickparvar dataset
+TRAIN_DATASET_SIZE    = 7022   # Masoudnickparvar dataset
 EXTERNAL_TEST_SIZE    = 6000   # BRISC 2025 dataset
 
 # Train / Validation / Test split ratio
@@ -67,7 +67,8 @@ TEST_DATA_DIR = BASE_DIR / "Datasets" / "Testing"
 
 # Data split file — saved ONCE, reused for ALL models
 DATA_SPLIT_FILE = ROOT / 'results' / 'data_split.json'
-
+TRAIN_DATASET_SIZE = 5600
+TEST_DATASET_SIZE = 1600
 # ─────────────────────────────────────────────────────────────
 # 5. IMAGE PREPROCESSING SETTINGS
 # ─────────────────────────────────────────────────────────────

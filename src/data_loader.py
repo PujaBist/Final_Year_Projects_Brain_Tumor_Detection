@@ -94,3 +94,21 @@ def load_datasets():
     )
 
     return train_dataset, test_dataset
+
+
+def show_dataset_info(train_dataset, test_dataset):
+    """
+    Display basic information about the datasets.
+    """
+
+    print("=" * 50)
+    print("DATASET SUMMARY")
+    print("=" * 50)
+
+    print(f"Training Images : {len(train_dataset)}")
+    print(f"Testing Images  : {len(test_dataset)}")
+
+    print(f"\nClasses : {train_dataset.classes}")
+
+    print(f"\nClass Mapping :")
+    print(train_dataset.class_to_idx)
