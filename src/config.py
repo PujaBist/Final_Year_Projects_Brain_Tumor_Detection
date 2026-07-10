@@ -59,8 +59,10 @@ TEST_RATIO  = 0.15             # 15% → internal test
 # Laptop paths (VS Code)
 BASE_DIR = Path("/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection")
 
-TRAIN_DATA_DIR = BASE_DIR / "Datasets" / "Training"
-TEST_DATA_DIR = BASE_DIR / "Datasets" / "Testing"
+DATASET_DIR = BASE_DIR / "Datasets"
+
+TRAIN_DATA_DIR = DATASET_DIR / "Training"
+TEST_DATA_DIR = DATASET_DIR / "Testing"
 # Colab paths (override in notebook if needed)
 # TRAIN_DATA_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/masoudnickparvar')
 # EXTERNAL_TEST_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/brisc2025')
