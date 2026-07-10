@@ -19,7 +19,7 @@ from typing import Tuple, List, Dict
 from sklearn.model_selection import train_test_split
 
 from src.config import (
-    TRAIN_DATA_DIR,
+     DATASET_DIR,
     DATA_SPLIT_FILE,
     CLASSES,
     CLASS_TO_IDX,
@@ -55,7 +55,7 @@ FOLDER_NAME_MAP = {
 # ─────────────────────────────────────────────────────────────
 
 def collect_image_paths(
-    dataset_dir: Path = TRAIN_DATA_DIR
+    dataset_dir: Path = DATASET_DIR
 ) -> Tuple[List[str], List[int]]:
     """
     Walk both Training/ and Testing/ subfolders and collect
