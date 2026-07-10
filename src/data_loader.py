@@ -150,3 +150,6 @@ def create_dataloaders(train_dataset, test_dataset):
     )
 
     return train_loader, test_loader
+
+# Dataset (load_datasets): Creates an organized collection of images and labels.
+# DataLoader (create_dataloaders): Takes that collection and delivers it to the model in batches, with options like shuffling and parallel loading.
