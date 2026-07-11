@@ -46,10 +46,10 @@ IMG_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
 # Maps config class names → possible folder names in dataset
 # Dataset uses 'notumor' (no underscore)
 FOLDER_NAME_MAP = {
-    'glioma'     : ['glioma',     'Glioma'],
-    'meningioma' : ['meningioma', 'Meningioma'],
-    'notumor'    : ['notumor',    'no_tumor',  'No Tumor'],
-    'pituitary'  : ['pituitary',  'Pituitary'],
+    'glioma': ['glioma', 'Glioma'],
+    'meningioma': ['meningioma', 'Meningioma'],
+    'notumor': ['notumor', 'no_tumor', 'No Tumor', 'noTumor'],
+    'pituitary': ['pituitary', 'Pituitary'],
 }
 
 
