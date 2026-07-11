@@ -8,168 +8,148 @@
 #              Every other file imports from this file only.
 # ============================================================
 
-import os
+import torch
 from pathlib import Path
 
 # ─────────────────────────────────────────────────────────────
 # 1. PROJECT ROOT
 # ─────────────────────────────────────────────────────────────
-# Automatically finds project root regardless of where
-# you run the code — works on laptop AND Google Colab
 
 ROOT = Path(__file__).resolve().parent.parent
 
 # ─────────────────────────────────────────────────────────────
 # 2. REPRODUCIBILITY SEED
 # ─────────────────────────────────────────────────────────────
-# Fixed seed = same results every run
-# NEVER change this after first experiment
 
 SEED = 42
 
 # ─────────────────────────────────────────────────────────────
-# 3. DATASET SETTINGS
+# 3. DATASET CLASS SETTINGS
 # ─────────────────────────────────────────────────────────────
-from pathlib import Path
 
+# Must match exact folder names inside Training/ and Testing/
+CLASSES     = ['glioma', 'meningioma', 'notumor', 'pituitary']
+NUM_CLASSES = len(CLASSES)  # 4
 
-
-
-# Four tumor classes — exact folder names in your dataset
-CLASSES        = ['glioma', 'meningioma', 'notumor', 'pituitary']
-NUM_CLASSES    = len(CLASSES)                          # 4
-
-# Class index mapping
-CLASS_TO_IDX   = {cls: idx for idx, cls in enumerate(CLASSES)}
-IDX_TO_CLASS   = {idx: cls for cls, idx in CLASS_TO_IDX.items()}
-
-# Dataset sizes (for reference)
-TRAIN_DATASET_SIZE    = 7022   # Masoudnickparvar dataset
-EXTERNAL_TEST_SIZE    = 6000   # BRISC 2025 dataset
-
-# Train / Validation / Test split ratio
-TRAIN_RATIO = 0.70             # 70% → training
-VAL_RATIO   = 0.15             # 15% → validation
-TEST_RATIO  = 0.15             # 15% → internal test
-# External test → BRISC 2025 (completely separate)
+CLASS_TO_IDX = {cls: idx for idx, cls in enumerate(CLASSES)}
+IDX_TO_CLASS = {idx: cls for cls, idx in CLASS_TO_IDX.items()}
 
 # ─────────────────────────────────────────────────────────────
 # 4. DATASET PATHS
 # ─────────────────────────────────────────────────────────────
-# Laptop paths (VS Code)
-BASE_DIR = Path("/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection")
 
-DATASET_DIR = BASE_DIR / "Datasets"
+# Google Colab — Google Drive path
+BASE_DIR    = Path('/content/drive/MyDrive/Final_Year_Projects_Brain_Tumor_Detection')
 
-TRAIN_DATA_DIR = DATASET_DIR / "Training"
-TEST_DATA_DIR = DATASET_DIR / "Testing"
-# Colab paths (override in notebook if needed)
-# TRAIN_DATA_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/masoudnickparvar')
-# EXTERNAL_TEST_DIR = Path('/content/drive/MyDrive/Brain_Tumor_Project/data/brisc2025')
+# Datasets/ contains Training/ and Testing/ subfolders
+DATASET_DIR = BASE_DIR / 'Datasets'
 
-# Data split file — saved ONCE, reused for ALL models
-DATA_SPLIT_FILE = ROOT / 'results' / 'data_split.json'
-TRAIN_DATASET_SIZE = 5600
-TEST_DATASET_SIZE = 1600
+# External test dataset (BRISC 2025) — Phase 8
+EXTERNAL_TEST_DIR = BASE_DIR / 'Datasets' / 'BRISC2025'
+
+# Split file — saved ONCE, reused for ALL 3 models
+DATA_SPLIT_FILE = BASE_DIR / 'results' / 'data_split.json'
+
 # ─────────────────────────────────────────────────────────────
-# 5. IMAGE PREPROCESSING SETTINGS
+# 5. DATASET SIZE REFERENCE
 # ─────────────────────────────────────────────────────────────
 
-IMAGE_SIZE   = 224             # Resize all images to 224×224
-IMAGE_CHANNELS = 3             # RGB (3 channels)
+TRAIN_DATASET_SIZE = 7023   # Training(5712) + Testing(1311)
+EXTERNAL_TEST_SIZE = 6000   # BRISC 2025
 
-# ImageNet normalization — used for pretrained models
-# These are standard values for ResNet, DenseNet, EfficientNet
+# ─────────────────────────────────────────────────────────────
+# 6. SPLIT RATIOS
+# ─────────────────────────────────────────────────────────────
+
+TRAIN_RATIO = 0.70   # 70% → training
+VAL_RATIO   = 0.15   # 15% → validation
+TEST_RATIO  = 0.15   # 15% → internal test
+
+# ─────────────────────────────────────────────────────────────
+# 7. IMAGE PREPROCESSING SETTINGS
+# ─────────────────────────────────────────────────────────────
+
+IMAGE_SIZE     = 224
+IMAGE_CHANNELS = 3
+
+# ImageNet normalization — standard for pretrained models
 NORMALIZE_MEAN = [0.485, 0.456, 0.406]
 NORMALIZE_STD  = [0.229, 0.224, 0.225]
 
-# CLAHE settings (contrast enhancement)
-CLAHE_CLIP_LIMIT    = 2.0
-CLAHE_TILE_GRID     = (8, 8)
+# CLAHE contrast enhancement
+CLAHE_CLIP_LIMIT = 2.0
+CLAHE_TILE_GRID  = (8, 8)
 
 # ─────────────────────────────────────────────────────────────
-# 6. DATA AUGMENTATION SETTINGS
+# 8. DATA AUGMENTATION SETTINGS
 # ─────────────────────────────────────────────────────────────
-# Applied ONLY to training set — never to val or test
 
 AUG_HORIZONTAL_FLIP  = True
 AUG_VERTICAL_FLIP    = False   # MRI — vertical flip unnatural
-AUG_ROTATION_LIMIT   = 15      # degrees — small rotation only
-AUG_BRIGHTNESS_LIMIT = 0.2     # subtle brightness change
-AUG_CONTRAST_LIMIT   = 0.2     # subtle contrast change
-AUG_ZOOM_LIMIT       = 0.1     # subtle zoom
+AUG_ROTATION_LIMIT   = 15      # degrees
+AUG_BRIGHTNESS_LIMIT = 0.2
+AUG_CONTRAST_LIMIT   = 0.2
+AUG_ZOOM_LIMIT       = 0.1
 
 # ─────────────────────────────────────────────────────────────
-# 7. TRAINING HYPERPARAMETERS
+# 9. TRAINING HYPERPARAMETERS
 # ─────────────────────────────────────────────────────────────
 
-BATCH_SIZE      = 32           # images per batch
-NUM_EPOCHS      = 50           # maximum training epochs
-LEARNING_RATE   = 1e-4         # initial learning rate
-WEIGHT_DECAY    = 1e-4         # L2 regularization
-MOMENTUM        = 0.9          # for SGD optimizer
+BATCH_SIZE          = 32
+NUM_EPOCHS          = 50
+LEARNING_RATE       = 1e-4
+WEIGHT_DECAY        = 1e-4
+MOMENTUM            = 0.9
 
-# Learning rate scheduler
-LR_SCHEDULER    = 'cosine'     # 'cosine' or 'step'
-LR_STEP_SIZE    = 10           # for StepLR
-LR_GAMMA        = 0.1          # for StepLR
+LR_SCHEDULER        = 'cosine'
+LR_STEP_SIZE        = 10
+LR_GAMMA            = 0.1
 
-# Early stopping
-EARLY_STOP_PATIENCE = 10       # stop if no improvement
-MIN_DELTA           = 1e-4     # minimum improvement threshold
+EARLY_STOP_PATIENCE = 10
+MIN_DELTA           = 1e-4
 
 # ─────────────────────────────────────────────────────────────
-# 8. MODEL SETTINGS
+# 10. MODEL SETTINGS
 # ─────────────────────────────────────────────────────────────
 
-# Three baseline models
-MODELS = ['resnet50', 'densenet121', 'efficientnetb0']
-
-# Pretrained on ImageNet
+MODELS          = ['resnet50', 'densenet121', 'efficientnetb0']
 PRETRAINED      = True
-
-# Freeze backbone layers initially (fine-tuning strategy)
-FREEZE_BACKBONE = False        # False = train all layers
-
-# Dropout rate for uncertainty estimation (Phase 10)
+FREEZE_BACKBONE = False
 DROPOUT_RATE    = 0.5
-MC_DROPOUT_SAMPLES = 50        # Monte Carlo forward passes
+MC_DROPOUT_SAMPLES = 50
 
 # ─────────────────────────────────────────────────────────────
-# 9. ENSEMBLE SETTINGS (Phase 6)
+# 11. ENSEMBLE SETTINGS (Phase 6)
 # ─────────────────────────────────────────────────────────────
 
 ENSEMBLE_METHOD  = 'weighted_soft_voting'
-# Weights assigned after individual model evaluation
-# Updated after Phase 4 training
 ENSEMBLE_WEIGHTS = {
-    'resnet50'      : 1.0,     # updated after training
-    'densenet121'   : 1.0,     # updated after training
-    'efficientnetb0': 1.0,     # updated after training
+    'resnet50'      : 1.0,
+    'densenet121'   : 1.0,
+    'efficientnetb0': 1.0,
 }
 
 # ─────────────────────────────────────────────────────────────
-# 10. CALIBRATION SETTINGS (Phase 7)
+# 12. CALIBRATION SETTINGS (Phase 7)
 # ─────────────────────────────────────────────────────────────
 
-TEMPERATURE_INIT = 1.5         # initial temperature value
-TEMPERATURE_LR   = 0.01        # learning rate for T optimization
-TEMPERATURE_ITER = 1000        # optimization iterations
-ECE_N_BINS       = 15          # bins for ECE calculation
+TEMPERATURE_INIT = 1.5
+TEMPERATURE_LR   = 0.01
+TEMPERATURE_ITER = 1000
+ECE_N_BINS       = 15
 
 # ─────────────────────────────────────────────────────────────
-# 11. RESULTS AND OUTPUT PATHS
+# 13. RESULTS AND OUTPUT PATHS
 # ─────────────────────────────────────────────────────────────
 
-RESULTS_DIR        = ROOT / 'results'
-MODELS_DIR         = RESULTS_DIR / 'models'
-FIGURES_DIR        = RESULTS_DIR / 'figures'
-METRICS_DIR        = RESULTS_DIR / 'metrics'
-LOGS_DIR           = RESULTS_DIR / 'logs'
-CHECKPOINTS_DIR    = RESULTS_DIR / 'checkpoints'
-DUPLICATE_DIR      = RESULTS_DIR / 'duplicate_report'
+RESULTS_DIR     = BASE_DIR / 'results'
+MODELS_DIR      = RESULTS_DIR / 'models'
+FIGURES_DIR     = RESULTS_DIR / 'figures'
+METRICS_DIR     = RESULTS_DIR / 'metrics'
+LOGS_DIR        = RESULTS_DIR / 'logs'
+CHECKPOINTS_DIR = RESULTS_DIR / 'checkpoints'
+DUPLICATE_DIR   = RESULTS_DIR / 'duplicate_report'
 
-# Model save file names
 MODEL_SAVE_NAMES = {
     'resnet50'      : MODELS_DIR / 'resnet50_best.pth',
     'densenet121'   : MODELS_DIR / 'densenet121_best.pth',
@@ -178,42 +158,40 @@ MODEL_SAVE_NAMES = {
 }
 
 # ─────────────────────────────────────────────────────────────
-# 12. DEVICE SETTINGS
+# 14. DEVICE SETTINGS
 # ─────────────────────────────────────────────────────────────
 
-import torch
-
-DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+DEVICE      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 NUM_WORKERS = 4 if torch.cuda.is_available() else 0
 PIN_MEMORY  = True if torch.cuda.is_available() else False
 
 # ─────────────────────────────────────────────────────────────
-# 13. LOGGING AND EXPERIMENT TRACKING
+# 15. LOGGING AND EXPERIMENT TRACKING
 # ─────────────────────────────────────────────────────────────
 
-USE_WANDB       = True          # set False if no internet
-WANDB_PROJECT   = 'brain-tumor-classification'
-WANDB_ENTITY    = 'puja-bist'   # your wandb username
-
-LOG_INTERVAL    = 10            # log every N batches
-
-# ─────────────────────────────────────────────────────────────
-# 14. STATISTICAL TEST SETTINGS (Phase 12)
-# ─────────────────────────────────────────────────────────────
-
-ALPHA           = 0.05          # significance level
-CONFIDENCE_CI   = 0.95          # 95% confidence interval
+USE_WANDB     = True
+WANDB_PROJECT = 'brain-tumor-classification'
+WANDB_ENTITY  = 'puja-bist'
+LOG_INTERVAL  = 10
 
 # ─────────────────────────────────────────────────────────────
-# 15. VERIFICATION — print config when imported
+# 16. STATISTICAL TEST SETTINGS (Phase 12)
+# ─────────────────────────────────────────────────────────────
+
+ALPHA         = 0.05
+CONFIDENCE_CI = 0.95
+
+# ─────────────────────────────────────────────────────────────
+# 17. VERIFICATION
 # ─────────────────────────────────────────────────────────────
 
 def print_config():
-    """Print all key configuration settings."""
     print("=" * 55)
     print("  BRAIN TUMOR PROJECT — CONFIGURATION")
     print("=" * 55)
-    print(f"  Project root  : {ROOT}")
+    print(f"  Base dir      : {BASE_DIR}")
+    print(f"  Dataset dir   : {DATASET_DIR}")
+    print(f"  Dataset exists: {DATASET_DIR.exists()}")
     print(f"  Device        : {DEVICE}")
     print(f"  Seed          : {SEED}")
     print(f"  Classes       : {CLASSES}")
@@ -223,12 +201,9 @@ def print_config():
     print(f"  Epochs        : {NUM_EPOCHS}")
     print(f"  Learning rate : {LEARNING_RATE}")
     print(f"  Models        : {MODELS}")
-    print(f"  Train split   : {TRAIN_RATIO}")
-    print(f"  Val split     : {VAL_RATIO}")
-    print(f"  Test split    : {TEST_RATIO}")
-    print(f"  Pretrained    : {PRETRAINED}")
-    print(f"  MC samples    : {MC_DROPOUT_SAMPLES}")
-    print(f"  Use wandb     : {USE_WANDB}")
+    print(f"  Split         : {TRAIN_RATIO}/{VAL_RATIO}/{TEST_RATIO}")
+    print(f"  Data split    : {DATA_SPLIT_FILE}")
+    print(f"  Results dir   : {RESULTS_DIR}")
     print("=" * 55)
 
 
