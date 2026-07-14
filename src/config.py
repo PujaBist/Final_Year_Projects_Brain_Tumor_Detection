@@ -54,7 +54,7 @@ DATA_SPLIT_FILE = BASE_DIR / 'results' / 'data_split.json'
 # 5. DATASET SIZE REFERENCE
 # ─────────────────────────────────────────────────────────────
 
-TRAIN_DATASET_SIZE = 7023   # Training(5712) + Testing(1311)
+TRAIN_DATASET_SIZE = 7200   # Training(5712) + Testing(1311)
 EXTERNAL_TEST_SIZE = 6000   # BRISC 2025
 
 # ─────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ CLAHE_TILE_GRID  = (8, 8)
 # 8. DATA AUGMENTATION SETTINGS
 # ─────────────────────────────────────────────────────────────
 
-AUG_HORIZONTAL_FLIP  = True
+AUG_HORIZONTAL_FLIP  = False
 AUG_VERTICAL_FLIP    = False   # MRI — vertical flip unnatural
 AUG_ROTATION_LIMIT   = 15      # degrees
 AUG_BRIGHTNESS_LIMIT = 0.2
