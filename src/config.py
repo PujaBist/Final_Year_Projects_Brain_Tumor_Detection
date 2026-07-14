@@ -90,13 +90,13 @@ AUG_ROTATION_LIMIT   = 15      # degrees
 AUG_BRIGHTNESS_LIMIT = 0.2
 AUG_CONTRAST_LIMIT   = 0.2
 AUG_ZOOM_LIMIT       = 0.1
-
+AUG_TRANSLATE        = 0.05  
 # ─────────────────────────────────────────────────────────────
 # 9. TRAINING HYPERPARAMETERS
 # ─────────────────────────────────────────────────────────────
 
 BATCH_SIZE          = 32
-NUM_EPOCHS          = 50
+NUM_EPOCHS          = 20
 LEARNING_RATE       = 1e-4
 WEIGHT_DECAY        = 1e-4
 MOMENTUM            = 0.9
@@ -105,7 +105,7 @@ LR_SCHEDULER        = 'cosine'
 LR_STEP_SIZE        = 10
 LR_GAMMA            = 0.1
 
-EARLY_STOP_PATIENCE = 10
+EARLY_STOP_PATIENCE = 5
 MIN_DELTA           = 1e-4
 
 # ─────────────────────────────────────────────────────────────
@@ -162,7 +162,7 @@ MODEL_SAVE_NAMES = {
 # ─────────────────────────────────────────────────────────────
 
 DEVICE      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-NUM_WORKERS = 4 if torch.cuda.is_available() else 0
+NUM_WORKERS = 2 if torch.cuda.is_available() else 0
 PIN_MEMORY  = True if torch.cuda.is_available() else False
 
 # ─────────────────────────────────────────────────────────────
