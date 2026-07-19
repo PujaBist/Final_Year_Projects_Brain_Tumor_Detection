@@ -1,0 +1,84 @@
+{
+  "model_name": "efficientnetb0_test",
+  "accuracy": 0.9833,
+  "precision": 0.9836,
+  "recall": 0.9833,
+  "f1_macro": 0.9834,
+  "f1_weighted": 0.9834,
+  "auc_macro": 0.9984,
+  "auc_weighted": 0.9984,
+  "mcc": 0.9779,
+  "kappa": 0.9778,
+  "per_class": {
+    "glioma": {
+      "precision": 0.9962,
+      "recall": 0.9704,
+      "specificity": 0.9988,
+      "f1_score": 0.9831,
+      "auc": 0.9963,
+      "tp": 262,
+      "fp": 1,
+      "fn": 8,
+      "tn": 809
+    },
+    "meningioma": {
+      "precision": 0.957,
+      "recall": 0.9889,
+      "specificity": 0.9852,
+      "f1_score": 0.9727,
+      "auc": 0.9982,
+      "tp": 267,
+      "fp": 12,
+      "fn": 3,
+      "tn": 798
+    },
+    "notumor": {
+      "precision": 0.9926,
+      "recall": 0.9889,
+      "specificity": 0.9975,
+      "f1_score": 0.9907,
+      "auc": 0.9995,
+      "tp": 267,
+      "fp": 2,
+      "fn": 3,
+      "tn": 808
+    },
+    "pituitary": {
+      "precision": 0.9888,
+      "recall": 0.9852,
+      "specificity": 0.9963,
+      "f1_score": 0.987,
+      "auc": 0.9998,
+      "tp": 266,
+      "fp": 3,
+      "fn": 4,
+      "tn": 807
+    }
+  },
+  "confusion_matrix": [
+    [
+      262,
+      7,
+      1,
+      0
+    ],
+    [
+      1,
+      267,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      267,
+      2
+    ],
+    [
+      0,
+      4,
+      0,
+      266
+    ]
+  ]
+}

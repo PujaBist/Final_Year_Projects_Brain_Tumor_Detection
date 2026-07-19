@@ -1,3 +1,32 @@
-Datasets/
+
+# Virtual environment
+venv/
+env/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+
+# Large model weights — too big for GitHub (use Google Drive)
+results/models/*.pth
+results/models/*.pt
+results/checkpoints/
+
+# Datasets
+data/
+Datasets/
+
+# Secrets
+kaggle.json
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Wandb
+wandb/
